@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>C / TXT Header Exporter</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div>
+        <h1>C / TXT Header Exporter</h1>
+        <p>Prepare formatted headers for C and text submissions</p>
+      </div>
+      <strong>v1.0 web</strong>
+    </header>
+
+    <section class="panel source-panel" aria-labelledby="source-title">
+      <div class="section-head">
+        <h2 id="source-title">Select Data Source</h2>
+      </div>
+      <div class="segmented" role="radiogroup" aria-label="Data source">
+        <label>
+          <input type="radio" name="mode" value="manual" checked>
+          <span>Manual Entry</span>
+        </label>
+        <label>
+          <input type="radio" name="mode" value="import">
+          <span>Use People Database</span>
+        </label>
+      </div>
+    </section>
+
+    <section class="panel manual-panel" aria-labelledby="manual-title">
+      <div class="section-head">
+        <h2 id="manual-title">Manual Entry</h2>
+      </div>
+      <div class="field-grid">
+        <label>Name<input id="manualName" autocomplete="name"></label>
+        <label>Roll No<input id="manualRoll" autocomplete="off"></label>
+        <label>Class<input id="manualClass" autocomplete="off"></label>
+      </div>
+      <p id="manualHint" class="mode-hint" hidden>Select Manual Entry above to edit these fields.</p>
+    </section>
+
+    <section class="panel people-panel" aria-labelledby="people-title">
+      <div class="section-head">
+        <h2 id="people-title">People Database</h2>
+        <output id="countText">Selected: 0 / Total: 0</output>
+      </div>
+
+      <div class="editor-row">
+        <label>Name<input id="personName" autocomplete="name"></label>
+        <label>Roll No<input id="personRoll" autocomplete="off"></label>
+        <label>Class<input id="personClass" autocomplete="off"></label>
+        <button id="addPerson" type="button">Add</button>
+        <button id="updatePerson" type="button">Update</button>
+        <button id="deletePerson" type="button" class="danger">Delete</button>
+      </div>
+
+      <div class="toolbar">
+        <label class="search-field">Search<input id="searchBox" type="search" autocomplete="off"></label>
+        <button id="selectVisible" type="button">Select All</button>
+        <button id="clearAll" type="button">Clear All</button>
+        <button id="sortName" type="button">Sort by Name</button>
+        <button id="exportPeople" type="button">Export Database</button>
+        <label class="file-button">
+          Import Database
+          <input id="importPeople" type="file" accept="application/json,.json">
+        </label>
+      </div>
+
+      <div id="peopleList" class="people-list" role="list" aria-live="polite"></div>
+      <p id="peopleHint" class="mode-hint" hidden>Select Use People Database above to add, edit, or choose records.</p>
+    </section>
+
+    <section class="panel" aria-labelledby="export-title">
+      <div class="section-head">
+        <h2 id="export-title">Export Options</h2>
+      </div>
+
+      <div class="option-grid">
+        <fieldset>
+          <legend>Export Type</legend>
+          <label><input type="radio" name="exportType" value="txt" checked> .txt</label>
+          <label><input type="radio" name="exportType" value="c"> .c</label>
+        </fieldset>
+        <fieldset>
+          <legend>Header Format</legend>
+          <label><input type="radio" name="headerStyle" value="comment" checked> C Comment</label>
+          <label><input type="radio" name="headerStyle" value="plain"> Plain Text</label>
+        </fieldset>
+        <label class="check-row"><input id="nameSuffix" type="checkbox" checked> Append Name to filename</label>
+      </div>
+    </section>
+
+    <section class="panel file-panel" aria-labelledby="files-title">
+      <div class="section-head">
+        <h2 id="files-title">Source Files</h2>
+        <div class="file-summary">
+          <output id="fileCount">No files selected</output>
+          <button id="clearFiles" type="button">Clear Files</button>
+        </div>
+      </div>
+      <label id="dropZone" class="drop-zone">
+        <input id="sourceFiles" type="file" accept=".c,.txt,text/plain,text/x-c" multiple>
+        <span>Select Source Files</span>
+      </label>
+      <div id="fileList" class="file-list"></div>
+    </section>
+
+    <section class="actions">
+      <button id="exportFiles" type="button" class="primary">Export Files</button>
+      <p id="statusText" role="status"></p>
+    </section>
+  </main>
+
+  <dialog id="messageDialog">
+    <form method="dialog">
+      <h2 id="dialogTitle">Message</h2>
+      <p id="dialogText"></p>
+      <div class="dialog-actions">
+        <button value="cancel" id="dialogCancel">Cancel</button>
+        <button value="ok" class="primary">OK</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
